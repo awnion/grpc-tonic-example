@@ -1,0 +1,26 @@
+{
+    "name": "grpc-client",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "pb": "mkdir -p src/gen && grpc_tools_node_protoc --ts_proto_out=./src/gen --ts_proto_opt=env=browser,outputServices=nice-grpc,outputServices=generic-definitions,outputJsonMethods=false,useExactTypes=false --proto_path=../proto helloworld.proto",
+        "clean": "rm -rf src/gen"
+    },
+    "devDependencies": {
+        "grpc-tools": "^1.12.4",
+        "ts-proto": "^1.156.7",
+        "typescript": "^5.2.2",
+        "vite": "^4.4.9"
+    },
+    "dependencies": {
+        "grpc-web": "^1.4.2",
+        "long": "^5.2.3",
+        "nice-grpc-common": "^2.0.2",
+        "nice-grpc-web": "^3.3.1",
+        "protobufjs": "^7.2.5"
+    }
+}
