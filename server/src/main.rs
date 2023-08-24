@@ -1,7 +1,7 @@
-use tonic::{transport::Server, Request, Response, Status};
-
 use hello_world::greeter_server::{Greeter, GreeterServer};
 use hello_world::{HelloReply, HelloRequest};
+use tonic::transport::Server;
+use tonic::{Request, Response, Status};
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::{DefaultMakeSpan, DefaultOnResponse, TraceLayer};
 use tracing::Level;
