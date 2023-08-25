@@ -2,11 +2,11 @@ use hello_world::greeter_server::{Greeter, GreeterServer};
 use hello_world::{HelloReply, HelloRequest};
 use tonic::transport::Server;
 use tonic::{Request, Response, Status};
-use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::{DefaultMakeSpan, DefaultOnResponse, TraceLayer};
 use tracing::Level;
 
 pub mod hello_world {
+    #![allow(non_snake_case)]
     tonic::include_proto!("helloworld");
 }
 
@@ -31,8 +31,6 @@ impl Greeter for GreeterService {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt().init();
 
-    let cors = CorsLayer::new().allow_headers(Any).allow_methods(Any).allow_origin(Any);
-
     let addr = "127.0.0.1:50051".parse()?;
     println!("Server listening on {}", addr);
 
@@ -42,9 +40,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .make_span_with(DefaultMakeSpan::new().level(Level::INFO))
                 .on_response(DefaultOnResponse::new().level(Level::INFO)),
         )
-        .layer(&cors)
+        // .layer(&cors)
         .accept_http1(true)
-        .add_service(GreeterServer::new(GreeterService::default()))
+        .add_service(tonic_web::enable(GreeterServer::new(GreeterService::default())))
         .serve(addr)
         .await?;
 

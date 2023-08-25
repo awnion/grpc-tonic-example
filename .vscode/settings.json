@@ -1,3 +1,4 @@
 {
+    "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
     "editor.formatOnSave": true
 }
